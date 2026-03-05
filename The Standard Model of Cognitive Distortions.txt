@@ -1,9 +1,9 @@
 # The Standard Model of Cognitive Distortions
 *Version 1.0 – Thomas Tedesco – 05 March 2026*
 
-(A working model attempt at a single, universally standardised list of cognitive distortions)
+A working attempt at a single, universally standardised list of cognitive distortions, created so anyone can easily understand and apply CBT through the ABC framework.
 
-For anyone who wants a clearer head and doesn't know where to start.
+(For anyone who wants a clearer head and doesn't know where to start).
 
 **Disclaimer**: This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support.
 
