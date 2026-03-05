@@ -140,7 +140,7 @@ This model (The Standard Model of Cognitive Distortions) was designed to work wi
 ---
 
 # (Easy Quick Start - URL) How to Use This Model
-Visit the following URL: thomastedesco94.github.io/standard-model-cbt
+Visit the following URL: https://thomastedesco94-ui.github.io/The-Standard-Model-of-Cognitive-Distortions/
 The simple user interface will assist you in completing your first guided thought journal entry.
 
 The interactive HTML version was built with the assistance of Claude (Anthropic).
