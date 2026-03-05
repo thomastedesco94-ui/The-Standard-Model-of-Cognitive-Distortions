@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thought Journal – CBT Exercise</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #FAF7F2;
+    --san-marino: #4470AD;
+    --deep-forrest: #0B3D20;
+    --warm-white: #FFF9F0;
+    --ink: #1C1814;
+    --muted: #7A6E64;
+    --accent: #C4793A;
+    --accent-light: #F0D9C4;
+    --accent-pale: #FBF0E6;
+    --border: #E5DDD3;
+    --success: #5A8A6A;
+    --success-light: #EAF3EC;
+    --step-active: #C4793A;
+    --step-done: #5A8A6A;
+    --step-inactive: #D4CBC2;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--san-marino);
+    color: var(--cream);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--deep-forrest);
+    color: var(--cream);
+    padding: 28px 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header h1 {
+    font-family: 'Lora', serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  header p {
+    font-size: 0.82rem;
+    color: #9B9189;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+  }
+  .header-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  /* PROGRESS */
+  .progress-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 20px 24px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .progress-bar::-webkit-scrollbar { display: none; }
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 500;
+    border: 2px solid var(--step-inactive);
+    color: var(--step-inactive);
+    background: white;
+    transition: all 0.3s ease;
+    cursor: default;
+    flex-shrink: 0;
+  }
+  .step-dot.active {
+    border-color: var(--step-active);
+    color: var(--step-active);
+    box-shadow: 0 0 0 3px var(--accent-light);
+  }
+  .step-dot.done {
+    border-color: var(--step-done);
+    background: var(--step-done);
+    color: white;
+  }
+  .step-line {
+    height: 2px;
+    width: 24px;
+    background: var(--step-inactive);
+    transition: background 0.3s ease;
+    flex-shrink: 0;
+  }
+  .step-line.done { background: var(--step-done); }
+
+  /* MAIN */
+  main {
+    padding: 24px 24px 80px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 16px;
+    display: none;
+    animation: slideIn 0.35s ease;
+  }
+  .card.visible { display: block; }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .card h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--deep-forrest);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  /* INPUTS */
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--warm-white);
+    resize: vertical;
+    transition: border-color 0.2s;
+    outline: none;
+    line-height: 1.5;
+  }
+  textarea:focus, input[type="text"]:focus {
+    border-color: var(--accent);
+    background: white;
+  }
+  textarea { min-height: 90px; }
+
+  /* PROMPT CHIPS */
+  .prompt-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 12px;
+  }
+  .chip {
+    background: var(--accent-pale);
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.76rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+  .chip:hover {
+    background: var(--accent);
+    color: white;
+  }
+
+  /* DISTORTIONS */
+  .distortion-categories { display: flex; flex-direction: column; gap: 12px; }
+  .cat-header {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .distortion-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .distortion-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--warm-white);
+  }
+  .distortion-option:hover {
+    border-color: var(--accent-light);
+    background: var(--accent-pale);
+  }
+  .distortion-option.selected {
+    border-color: var(--accent);
+    background: var(--accent-pale);
+  }
+  .distortion-option input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    width: 15px;
+    height: 15px;
+  }
+  .distortion-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ink);
+    display: block;
+    line-height: 1.3;
+  }
+  .distortion-desc {
+    font-size: 0.76rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* CHALLENGE QUESTIONS */
+  .challenge-qs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .challenge-q {
+    background: var(--accent-pale);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 9px 13px;
+    font-size: 0.82rem;
+    color: var(--ink);
+    font-style: italic;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .challenge-q:hover { background: var(--accent-light); }
+
+  /* REFLECTION CARD */
+  .reflection-card {
+    background: var(--success-light);
+    border: 1px solid #C3DFC9;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .reflection-card .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--success);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .reflection-card p {
+    font-size: 0.86rem;
+    color: #2D4A36;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* EMOTION SLIDER */
+  .emotion-group { margin-bottom: 14px; }
+  .emotion-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  .emotion-name { font-size: 0.85rem; font-weight: 500; color: var(--ink); }
+  .emotion-val {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 500;
+    min-width: 28px;
+    text-align: right;
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    height: 4px;
+    cursor: pointer;
+  }
+
+  /* BUTTONS */
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 11px 22px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    flex: 1;
+  }
+  .btn-primary:hover { background: #B06930; transform: translateY(-1px); }
+  .btn-secondary {
+    background: white;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-success {
+    background: var(--success);
+    color: white;
+    flex: 1;
+  }
+  .btn-success:hover { background: #4A7A5A; }
+
+  /* SUMMARY */
+  .summary-section { margin-bottom: 16px; }
+  .summary-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .summary-value {
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 13px;
+    line-height: 1.5;
+  }
+  .distortion-tag {
+    display: inline-block;
+    background: var(--accent-pale);
+    color: var(--accent);
+    border: 1px solid var(--accent-light);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.76rem;
+    margin: 2px;
+    font-weight: 400;
+  }
+
+  .disclaimer {
+    font-size: 0.73rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 28px;
+    line-height: 1.6;
+    padding: 0 8px;
+  }
+  .disclaimer span { color: var(--accent); font-style: italic; }
+
+  /* INTRO */
+  .intro-card {
+    background: var(--deep-forrest);
+    border-radius: 16px;
+    padding: 26px 24px;
+    color: var(--cream);
+    margin-bottom: 20px;
+  }
+  .intro-card h2 {
+    font-family: 'Lora', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .intro-card p {
+    font-size: 0.84rem;
+    color: #9B9189;
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+  .abc-row {
+    display: flex;
+    gap: 10px;
+  }
+  .abc-pill {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+  .abc-letter {
+    font-family: 'Lora', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    font-weight: 600;
+    display: block;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+  .abc-word {
+    font-size: 0.68rem;
+    color: #A09488;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-weight: 500;
+  }
+
+  /* FEEL METER */
+  .feel-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .feel-btn {
+    flex: 1;
+    padding: 9px;
+    border-radius: 9px;
+    border: 1.5px solid var(--border);
+    background: var(--warm-white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+  }
+  .feel-btn span { font-size: 0.65rem; color: var(--muted); }
+  .feel-btn.selected { border-color: var(--accent); background: var(--accent-pale); }
+  .feel-btn:hover { border-color: var(--accent-light); }
+
+  .info-box {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent-light);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 0.8rem;
+    color: #7A4A20;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .info-box strong { font-weight: 500; }
+
+  .confetti-msg {
+    text-align: center;
+    padding: 8px 0 16px;
+  }
+  .confetti-msg .emoji { font-size: 2.4rem; display: block; margin-bottom: 6px; }
+  .confetti-msg h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .confetti-msg p { font-size: 0.82rem; color: var(--muted); }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">CBT Thought Journal</div>
+  <h1>Clear Your Head</h1>
+  <p>Based on the ABC Framework &amp; The Standard Model of Cognitive Distortions</p>
+</header>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<main>
+  <!-- INTRO -->
+  <div class="intro-card" id="introCard">
+    <h2>How this works</h2>
+    <p>When you're feeling stuck in a spiral, this short exercise helps you slow down, name what's happening, and find a more balanced view. This can be a very quick exercise, but feel free to take as long as you need!</p>
+    <div class="abc-row">
+      <div class="abc-pill"><span class="abc-letter">A</span><span class="abc-word">Activating Event</span></div>
+      <div class="abc-pill"><span class="abc-letter">B</span><span class="abc-word">Belief (Automatic Thought)</span></div>
+      <div class="abc-pill"><span class="abc-letter">C</span><span class="abc-word">Consequence</span></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: Event -->
+  <div class="card visible" id="step1">
+    <div class="step-label">Step 1 of 6 · Activating Event</div>
+    <h2>What happened?</h2>
+    <p class="card-desc">Describe what happened right before you started feeling this way. Just the facts.</p>
+    <div class="prompt-chips">
+      <span class="chip" onclick="insertPrompt('step1-text', 'Something external (a comment, mistake, rejection)...')">Something external (a comment, mistake, rejection)</span>
+      <span class="chip" onclick="insertPrompt('step1-text', 'Something internal (a memory, thought, or physical sensation)...')">Something internal (a memory, thought, or physical sensation)</span>
+      <span class="chip" onclick="insertPrompt('step1-text', 'I received difficult news.')">Difficult news</span>
+      <span class="chip" onclick="insertPrompt('step1-text', 'I had a confrontation with someone.')">A confrontation</span>
+    </div>
+    <textarea id="step1-text" placeholder="e.g. I got critical feedback from my manager in a meeting." rows="3"></textarea>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goStep(2)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: Thought -->
+  <div class="card" id="step2">
+    <div class="step-label">Step 2 of 6 · Automatic Thought</div>
+    <h2>What went through your mind?</h2>
+    <p class="card-desc">Identify the Belief/Automatic Thought you had. What did you tell yourself?</p>
+    <div class="prompt-chips">
+      <span class="chip" onclick="insertPrompt('step2-text', 'I\'m such a failure.')">I'm a failure</span>
+      <span class="chip" onclick="insertPrompt('step2-text', 'Nobody likes me.')">Nobody likes me</span>
+      <span class="chip" onclick="insertPrompt('step2-text', 'This always happens to me.')">This always happens</span>
+      <span class="chip" onclick="insertPrompt('step2-text', 'I\'ll never get this right.')">I'll never get this right</span>
+    </div>
+    <textarea id="step2-text" placeholder='e.g. "I always mess things up. My career is over."' rows="3"></textarea>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(3)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: Distortions -->
+  <div class="card" id="step3">
+    <div class="step-label">Step 3 of 6 · Identify common Distortions that may be applicable</div>
+    <h2>Which thinking traps can you spot? Use the Standard Model of Cognitive Distortions to label distortions in the thought.</h2>
+    <p class="card-desc">Select any that may apply, <strong>at least one</strong>, but you only need one to do good work! Many thoughts contain several. Remember the goal is recognition, not perfect classification.</p>
+    <div class="distortion-categories" id="distortionList"></div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(4)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: Challenge -->
+  <div class="card" id="step4">
+    <div class="step-label">Step 4 of 6 · Challenge the Thought</div>
+    <h2>Question the evidence</h2>
+    <p class="card-desc">Ask an evidence based question, then write your honest answer below.</p>
+    <div class="challenge-qs">
+      <div class="challenge-q" onclick="appendChallenge('What is the actual evidence for this thought?')">💭 What is the actual evidence for this thought?</div>
+      <div class="challenge-q" onclick="appendChallenge('Am I confusing a feeling with a fact?')">❓ Am I confusing a feeling with a fact?</div>
+      <div class="challenge-q" onclick="appendChallenge('What would I say to a friend in this exact situation?')">🤝 What would I say to a friend in this situation?</div>
+      <div class="challenge-q" onclick="appendChallenge('Is there a more balanced way to see this?')">⚖️ Is there a more balanced way to see this?</div>
+      <div class="challenge-q" onclick="appendChallenge('Have I handled something like this before?')">🌱 Have I handled something like this before?</div>
+    </div>
+    <textarea id="step4-text" placeholder="Write your honest answers here..." rows="4"></textarea>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(3)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(5)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: Reframe -->
+  <div class="card" id="step5">
+    <div class="step-label">Step 5 of 6 · Reframe</div>
+    <h2>Find a more balanced thought</h2>
+    <p class="card-desc">Not forced positivity, just something more accurate and flexible than the original thought.</p>
+    <div class="info-box">
+      <strong>Your original thought:</strong> "<span id="originalThought"></span>"
+    </div>
+    <textarea id="step5-text" placeholder='e.g. "I made a mistake, but one mistake does not define my whole career. I have recovered before."' rows="4"></textarea>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(4)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(6)">Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 6: Consequence / feeling shift -->
+  <div class="card" id="step6">
+    <div class="step-label">Step 6 of 6 · Notice the Shift</div>
+    <h2>How do you feel now?</h2>
+    <p class="card-desc">Even a small shift matters. CBT works through practice and repetition.
+     Regular journaling helps you spot patterns over time. Consider saving finished entries so you can look back and notice patterns and progress e.g. "It looks like I keep catastrophising about work specifically." Or "Oh nice, my mind reading has reduced over the past month."</p>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;">Rate how intense each feeling is right now (0 = not at all, 10 = very strong):</p>
+    <div id="emotionSliders"></div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(5)">← Back</button>
+      <button class="btn btn-success" onclick="showSummary()">See my summary ✓</button>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="card" id="summaryCard">
+    <div class="confetti-msg">
+      <span class="emoji">💪</span>
+      <h3>You did the work! Come back whenever you need to 😊</h3>
+      <p>Here's a record of your session. Recognition is the first step to change.</p>
+    </div>
+    <div class="summary-section">
+      <div class="summary-label">What happened</div>
+      <div class="summary-value" id="sum-event"></div>
+    </div>
+    <div class="summary-section">
+      <div class="summary-label">Automatic thought</div>
+      <div class="summary-value" id="sum-thought"></div>
+    </div>
+    <div class="summary-section">
+      <div class="summary-label">Thinking traps identified</div>
+      <div class="summary-value" id="sum-distortions"></div>
+    </div>
+    <div class="summary-section">
+      <div class="summary-label">Your challenge notes</div>
+      <div class="summary-value" id="sum-challenge"></div>
+    </div>
+    <div class="summary-section">
+      <div class="summary-label">Balanced reframe</div>
+      <div class="summary-value" style="font-family:'Lora',serif;font-style:italic;" id="sum-reframe"></div>
+    </div>
+    <div class="btn-row" style="margin-top:10px;">
+      <button class="btn btn-secondary" onclick="startOver()">Start a new entry</button>
+      <button class="btn btn-primary" onclick="printSummary()">🖨 Print / Save</button>
+<button class="btn btn-secondary" onclick="exportMarkdown()">⬇ Export as Markdown (text file)</button>
+    </div>
+    <p class="disclaimer">Based on the <span>Standard Model of Cognitive Distortions v1.0</span> by Thomas Tedesco (2026).<br>This is a psychoeducational framework, not a diagnostic or therapeutic tool. 
+     This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support.</p>
+  </div>
+
+</main>
+
+<script>
+const DISTORTIONS = [
+  {
+    cat: "A. Thinking in Extremes",
+    items: [
+      { id: "aon", name: "All-or-Nothing Thinking (Binary Judgements)", desc: "When one sees situations, outcomes, or behaviours in black-and-white extremes, with no middle ground. e.g. 'If I don’t do this perfectly, I’ve failed.'" },
+      { id: "aon-id", name: "All-or-Nothing Thinking: Identity-Based Absolutes (Extreme Self-Ratings / Labelling)", desc: "When one turns specific mistakes or events into absolute judgments about themselves or others. e.g. 'I made a mistake, so I am a failure.'" },
+      { id: "mag", name: "Magnification", desc: "When one exaggerates the threat, significance, or impact of something. e.g. 'This tiny mistake could ruin everything.'" },
+      { id: "cat", name: "Magnification: Catastrophising", desc: "When one assumes the worst possible outcome or treats discomfort as catastrophic. e.g. 'What if the absolute worst happens?'" },
+      { id: "min", name: "Minimisation", desc: "When one downplays or dismisses a situation, achievement, or concern. e.g. 'It’s not bullying, it’s just banter.'" },
+    ]
+  },
+  {
+    cat: "B. Filtering & Assuming the Worst",
+    items: [
+      { id: "mf", name: "Mental Filtering", desc: "When one dwells only on the negative details of a situation and ignores the positive aspects. e.g. 'Nothing good happened today.'" },
+      { id: "dqp", name: "Disqualifying the Positive", desc: "When one rejects positive experiences by insisting, they 'don't count' for some reason or other. e.g. 'They didn’t really mean that, they were just being nice.'" },
+    ]
+  },
+  {
+    cat: "C. Jumping to Conclusions",
+    items: [
+      { id: "mr", name: "Mind Reading", desc: "When one assumes they know what others think. e.g. 'She won’t want to talk to me.'" },
+      { id: "ft", name: "Fortune Telling", desc: "When one predicts the future negatively. e.g. 'I will fail.'" },
+      { id: "og", name: "Overgeneralisation", desc: "When one sees one event as a permanent pattern. e.g. 'Everyone dislikes me.'" },
+      { id: "lab", name: "Overgeneralisation: Labelling and Mislabelling", desc: "When one assigns broad, usually negative, labels to oneself or others based on single instances or behaviours. e.g. 'I'm a loser.'" },
+    ]
+  },
+  {
+    cat: "D. Self & Other Misattributions",
+    items: [
+      { id: "pers", name: "Personalisation", desc: "When one takes responsibility for events outside their control. e.g. 'This happened because of me.'" },
+      { id: "blame", name: "Blaming Others", desc: "When one externalises responsibility. e.g. 'This is all their fault.'" },
+      { id: "foc", name: "Fallacy of Change", desc: "When one expects others to change to suit them. e.g. 'Things will be better once he quits drinking.'" },
+      { id: "abr", name: "Always Being Right", desc: "When one has rigid thinking about correctness. e.g. 'If I want it done properly, I’ll have to do it myself.'" },
+    ]
+  },
+  {
+    cat: "E. Emotional Distortions",
+    items: [
+      { id: "er", name: "Emotional Reasoning", desc: "When one equates their feelings to facts. e.g. 'I feel useless, so I must be useless.'" },
+      { id: "gt", name: "Gratitude Traps", desc: "When one misunderstands the nature or practice of gratitude and uses it to justify expectations or entitlement. e.g. 'I bought her a drink, so she should go on a date with me.'" },
+    ]
+  },
+  {
+    cat: "F. Rigid Rules",
+    items: [
+      { id: "should", name: "Should / Must Statements", desc: "When one applies rigid, inflexible rules about how they, others, or the world should or must be. e.g. 'I shouldn’t have made so many mistakes.' or 'I must do better next time.'" },
+    ]
+  },
+];
+
+const EMOTIONS = ["Anxious", "Sad", "Frustrated", "Overwhelmed", "Hopeless"];
+let currentStep = 1;
+let selectedDistortions = new Set();
+
+// Build progress bar
+function buildProgress() {
+  const bar = document.getElementById('progressBar');
+  bar.innerHTML = '';
+  for (let i = 1; i <= 6; i++) {
+    const item = document.createElement('div');
+    item.className = 'step-item';
+    const dot = document.createElement('div');
+    dot.className = 'step-dot' + (i < currentStep ? ' done' : i === currentStep ? ' active' : '');
+    dot.textContent = i < currentStep ? '✓' : i;
+    item.appendChild(dot);
+    if (i < 6) {
+      const line = document.createElement('div');
+      line.className = 'step-line' + (i < currentStep ? ' done' : '');
+      item.appendChild(line);
+    }
+    bar.appendChild(item);
+  }
+}
+
+// Build distortions
+function buildDistortions() {
+  const container = document.getElementById('distortionList');
+  container.innerHTML = '';
+  DISTORTIONS.forEach(cat => {
+    const sec = document.createElement('div');
+    const hdr = document.createElement('div');
+    hdr.className = 'cat-header';
+    hdr.textContent = cat.cat;
+    sec.appendChild(hdr);
+    const opts = document.createElement('div');
+    opts.className = 'distortion-options';
+    cat.items.forEach(item => {
+      const opt = document.createElement('label');
+      opt.className = 'distortion-option' + (selectedDistortions.has(item.id) ? ' selected' : '');
+      opt.innerHTML = `<input type="checkbox" ${selectedDistortions.has(item.id) ? 'checked' : ''} onchange="toggleDistortion('${item.id}', this, this.closest('.distortion-option'))">
+        <div><span class="distortion-name">${item.name}</span><span class="distortion-desc">${item.desc}</span></div>`;
+      opts.appendChild(opt);
+    });
+    sec.appendChild(opts);
+    container.appendChild(sec);
+  });
+}
+
+// Build emotion sliders
+function buildSliders() {
+  const container = document.getElementById('emotionSliders');
+  container.innerHTML = '';
+  EMOTIONS.forEach(e => {
+    container.innerHTML += `
+      <div class="emotion-group">
+        <div class="emotion-label-row">
+          <span class="emotion-name">${e}</span>
+          <span class="emotion-val" id="val-${e}">0</span>
+        </div>
+        <input type="range" min="0" max="10" value="0" oninput="document.getElementById('val-${e}').textContent=this.value">
+      </div>`;
+  });
+}
+
+function toggleDistortion(id, cb, el) {
+  if (cb.checked) { selectedDistortions.add(id); el.classList.add('selected'); }
+  else { selectedDistortions.delete(id); el.classList.remove('selected'); }
+}
+
+function goStep(n) {
+  document.getElementById('step' + currentStep).classList.remove('visible');
+  currentStep = n;
+  const card = document.getElementById('step' + n);
+  card.classList.add('visible');
+  buildProgress();
+  if (n === 3) buildDistortions();
+  if (n === 5) {
+    document.getElementById('originalThought').textContent = document.getElementById('step2-text').value || '...';
+  }
+  if (n === 6) buildSliders();
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function insertPrompt(id, text) {
+  document.getElementById(id).value = text;
+  document.getElementById(id).focus();
+}
+
+function appendChallenge(q) {
+  const ta = document.getElementById('step4-text');
+  ta.value = ta.value ? ta.value + '\n\n' + q + '\n' : q + '\n';
+  ta.focus();
+}
+
+function showSummary() {
+  document.getElementById('step6').classList.remove('visible');
+  const sc = document.getElementById('summaryCard');
+  sc.classList.add('visible');
+  document.getElementById('sum-event').textContent = document.getElementById('step1-text').value || '(not entered)';
+  document.getElementById('sum-thought').textContent = document.getElementById('step2-text').value || '(not entered)';
+
+  const distEl = document.getElementById('sum-distortions');
+  if (selectedDistortions.size === 0) {
+    distEl.textContent = 'None selected';
+  } else {
+    distEl.innerHTML = '';
+    DISTORTIONS.forEach(cat => cat.items.forEach(item => {
+      if (selectedDistortions.has(item.id)) {
+        const tag = document.createElement('span');
+        tag.className = 'distortion-tag';
+        tag.textContent = item.name;
+        distEl.appendChild(tag);
+      }
+    }));
+  }
+  document.getElementById('sum-challenge').textContent = document.getElementById('step4-text').value || '(not entered)';
+  document.getElementById('sum-reframe').textContent = document.getElementById('step5-text').value || '(not entered)';
+  sc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function startOver() {
+  document.getElementById('summaryCard').classList.remove('visible');
+  selectedDistortions.clear();
+  ['step1-text','step2-text','step4-text','step5-text'].forEach(id => document.getElementById(id).value = '');
+  currentStep = 1;
+  document.getElementById('step1').classList.add('visible');
+  buildProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function printSummary() { window.print(); }
+
+function exportMarkdown() {
+  const date = new Date().toISOString().split('T')[0];
+  const event = document.getElementById('sum-event').textContent;
+  const thought = document.getElementById('sum-thought').textContent;
+  const challenge = document.getElementById('sum-challenge').textContent;
+  const reframe = document.getElementById('sum-reframe').textContent;
+  
+  const distortionTags = document.querySelectorAll('.distortion-tag');
+  const distortions = Array.from(distortionTags).map(t => `- ${t.textContent}`).join('\n');
+
+  const md = `# CBT Journal Entry
+*${date}*
+
+## What happened
+${event}
+
+## Automatic thought
+${thought}
+
+## Thinking traps identified
+${distortions || '- None selected'}
+
+## Challenge notes
+${challenge}
+
+## Balanced reframe
+${reframe}
+
+---
+*Generated by The Standard Model of Cognitive Distortions v1.0 – Thomas Tedesco (2026)*
+*This is a psychoeducational framework, not a diagnostic or therapeutic tool. 
+This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support.*`;
+
+  const blob = new Blob([md], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `CBT-Journal-${date}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+buildProgress();
+</script>
+</body>
+</html>
