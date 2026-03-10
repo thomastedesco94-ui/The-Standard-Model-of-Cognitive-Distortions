@@ -313,7 +313,7 @@ Please also refer to the disclaimer as a reminder that “this is a psychoeducat
 
 **Q: Are you a qualified therapist/psychologist/psychiatrist?**
 
-**A:** As at the time of writing this (10 March 2026), no, I’m not a qualified therapist/psychologist/psychiatrist, and the disclaimer is there to make that clear. That said, I am currently completing a conversion master's degree in psychology, I volunteer at the Samaritans, and I have personal experience with CBT. The framework itself is grounded in the established work of Beck, Burns and Ellis (Beck and Burns are renowned qualified Psychiatrists, Ellis is a renowned qualified Psychologist). I’m just someone who found it helpful, wanted to make it more accessible, and tried to do that responsibly. I honestly think anyone reading this is more than capable of learning CBT, and it will significantly improve lives providing they do the work.
+**A:** As at the time of writing this (10 March 2026), no, I’m not a qualified therapist/psychologist/psychiatrist, and the disclaimer is there to make that clear. That said, I am currently completing a conversion master's degree in psychology, I volunteer at the Samaritans, and I have personal experience with CBT. The framework itself is grounded in the established work of Beck, Burns and Ellis (Beck and Burns are renowned qualified Psychiatrists, Ellis is a renowned qualified Psychologist). I’m just someone who found it helpful, wanted to make it more accessible, and tried to do that responsibly. I honestly think anyone reading this is more than capable of learning CBT, and it will significantly improve their lives providing they do the work.
 
 **Q: I actually found this really helpful, how do I thank you?**
 
