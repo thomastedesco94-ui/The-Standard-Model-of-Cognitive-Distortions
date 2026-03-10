@@ -1,6 +1,4 @@
 # The Standard Model of Cognitive Distortions
-*Version 1.0 – Thomas Tedesco – 05 March 2026*
-
 *Version 1.1 – Refined disclaimer, added FAQ, added link to readme in the HTML, added licence information to the readme. – Thomas Tedesco – 10 March 2026*
 
 (A working model attempt at a single, universally standardised list of cognitive distortions)
@@ -324,11 +322,16 @@ Please also refer to the disclaimer as a reminder that “this is a psychoeducat
 **A:** You are so welcome but it was you who did the work! Do it whenever you need! If you insist on doing something you can share it with others and “pay it forward” so to speak. 
 
 ---
+## Author and Version History
+**Author:** Thomas Tedesco
 
-**Author:** Thomas Tedesco  
+**Version** 1.0
+
+**Date:** 05 March 2026 
+
 **Version:** 1.1  
+
 **Date:** 10 March 2026  
-**Disclaimer:** This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support. If you have a history of compulsive behaviour, please be mindful that self-directed CBT journaling can sometimes reinforce compulsive patterns. Use this tool gently and at your own pace, and consider working with a professional if you notice this happening.
 
 ---
 ## Licence
