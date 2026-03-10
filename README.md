@@ -3,11 +3,9 @@
 
 *Version 1.1 – Refined disclaimer, added FAQ, added link to readme in the HTML, added licence information to the readme. – Thomas Tedesco – 10 March 2026*
 
-Disclaimer: This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support. If you have a history of compulsive behaviour, please be mindful that self-directed CBT journaling can sometimes reinforce compulsive patterns. Use this tool gently and at your own pace, and consider working with a professional if you notice this happening.
+**Disclaimer:** This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support. If you have a history of compulsive behaviour, please be mindful that self-directed CBT journaling can sometimes reinforce compulsive patterns. Use this tool gently and at your own pace, and consider working with a professional if you notice this happening.
 
 (For anyone who wants a clearer head and doesn't know where to start).
-
-**Disclaimer**: This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support.
 
 There isn’t a single, universally standardised list of cognitive distortions, but many are widely recognised in Cognitive Behavioural Therapy (CBT). **Aaron T. Beck**, one of the founders of CBT, initially introduced the concept of cognitive distortions in the 1960s. His landmark work *Cognitive Therapy of Depression* (Beck et al., 1979) remains the foundational clinical text. His student **David D. Burns** later expanded on it in *Feeling Good: The New Mood Therapy* (1980). Most sources align on the main types of cognitive distortions but might phrase or categorise them slightly differently.
 
