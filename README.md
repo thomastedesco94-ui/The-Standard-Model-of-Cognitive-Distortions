@@ -1,5 +1,6 @@
 # The Standard Model of Cognitive Distortions
 *Version 1.0 – Thomas Tedesco – 05 March 2026*
+
 *Version 1.1 – Refined disclaimer, added FAQ, added link to readme in the HTML, added licence information to the readme. – Thomas Tedesco – 10 March 2026*
 
 Disclaimer: This is a psychoeducational framework, not a diagnostic or therapeutic tool. This framework does not replace working with a qualified therapist. If you are experiencing significant distress, please seek professional support. If you have a history of compulsive behaviour, please be mindful that self-directed CBT journaling can sometimes reinforce compulsive patterns. Use this tool gently and at your own pace, and consider working with a professional if you notice this happening.
