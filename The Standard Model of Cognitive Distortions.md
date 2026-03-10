@@ -1,6 +1,4 @@
 # The Standard Model of Cognitive Distortions
-*Version 1.0 – Thomas Tedesco – 05 March 2026*
-
 *Version 1.1 – Refined disclaimer, added FAQ, added link to readme in the HTML, added licence information to the readme. – Thomas Tedesco – 10 March 2026*
 
 (A working model attempt at a single, universally standardised list of cognitive distortions)
